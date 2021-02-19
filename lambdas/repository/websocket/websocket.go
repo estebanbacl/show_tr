@@ -24,7 +24,7 @@ type WebSocketRepository interface {
 func NewRepository(database *dynamodb.DynamoDB) WebSocketRepository {
 	return &repository{
 		database: database,
-		table:    config.POCWebsocketConnectionTable,
+		table:    config.WebsocketConnectionTable,
 	}
 }
 
