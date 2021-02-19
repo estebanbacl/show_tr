@@ -49,3 +49,18 @@ resource "aws_apigatewayv2_route" "disconnect_route" {
   operation_name = "DisconnectRoute"
   target         = "integrations/${aws_apigatewayv2_integration.ws_disconnect_integration.id}"
 }
+
+resource "aws_apigatewayv2_integration" "ws_message_integration" {
+  api_id             = aws_apigatewayv2_api.web_socket_api.id
+  integration_type   = "AWS_PROXY"
+  description        = "Lambda example"
+  integration_uri    = aws_lambda_function.web_socket_message_lambda.invoke_arn
+  integration_method = "POST"
+}
+
+resource "aws_apigatewayv2_route" "message_route" {
+  api_id    = aws_apigatewayv2_api.web_socket_api.id
+  route_key = "message"
+  operation_name = "MessageRoute"
+  target         = "integrations/${aws_apigatewayv2_integration.ws_message_integration.id}"
+}
